@@ -4,7 +4,6 @@ import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Model.Producto;
-import co.edu.uniquindio.SOLID.Model.Proveedor;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
 import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class InventarioController implements Initializable {
 
-    @FXML private ComboBox<Proveedor> cmbProveedores;
+    @FXML private ComboBox<ProveedorDTO> cmbProveedores;
     @FXML private TitledPane tpCrearProveedor;
     @FXML private TextField txtProvNit;
     @FXML private TextField txtProvNombre;
@@ -35,11 +34,11 @@ public class InventarioController implements Initializable {
     @FXML private TableColumn<ProductoDTO, Number> colInvPrecio;
     @FXML private TableColumn<ProductoDTO, Number> colInvStock;
 
-    private ObservableList<Proveedor> proveedores;
+    private ObservableList<ProveedorDTO> proveedores;
     private ObservableList<ProductoDTO> productos;
     private Minimercado minimercado = Minimercado.getInstancia();
-    private ProviderFacade providerFacade = ProviderFacade.getInstance();
-    private ProductFacade productFacade = ProductFacade.getInstance();
+    private final ProviderFacade providerFacade = ProviderFacade.getInstance();
+    private final ProductFacade productFacade = ProductFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,8 +97,8 @@ public class InventarioController implements Initializable {
         }
         
         try {
-            Proveedor newp = new Proveedor(nit, nombre, contacto, email, telefono);
-            Proveedor p = providerFacade.CreateProvider(newp);
+            ProveedorDTO p = new ProveedorDTO(nit, nombre, contacto, email, telefono);
+            providerFacade.CreateProvider(p);
             if (cmbProveedores != null) cmbProveedores.getSelectionModel().select(p);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Proveedor creado: " + nombre);
             if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
@@ -123,7 +122,7 @@ public class InventarioController implements Initializable {
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
             ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            Proveedor actualizado = providerFacade.updateProvider(newp);
+            ProveedorDTO actualizado = providerFacade.updateProvider(newp);
             for (int i = 0; i < proveedores.size(); i++) {
                 if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
             }
@@ -147,7 +146,7 @@ public class InventarioController implements Initializable {
         String nit = txtProvNit != null ? txtProvNit.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            Proveedor actualizado = providerFacade.activateProvider(nit, true);
+            ProveedorDTO actualizado = providerFacade.activateProvider(nit, true);
             for (int i = 0; i < proveedores.size(); i++) { if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; } }
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
@@ -158,7 +157,7 @@ public class InventarioController implements Initializable {
         String nit = txtProvNit != null ? txtProvNit.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            Proveedor actualizado = providerFacade.lockProvider(nit, false);
+            ProveedorDTO actualizado = providerFacade.lockProvider(nit, false);
             for (int i = 0; i < proveedores.size(); i++) { if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; } }
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
@@ -166,7 +165,7 @@ public class InventarioController implements Initializable {
 
     @FXML
     void confirmarEntradaInventario() {
-        Proveedor proveedor = cmbProveedores != null ? cmbProveedores.getValue() : null;
+        ProveedorDTO proveedor = cmbProveedores != null ? cmbProveedores.getValue() : null;
         ProductoDTO prod = cmbProductoEntrada != null ? cmbProductoEntrada.getValue() : null;
         int cant = spnCantidadEntrada != null ? spnCantidadEntrada.getValue() : 0;
         
