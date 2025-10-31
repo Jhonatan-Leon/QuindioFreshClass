@@ -1,10 +1,13 @@
 package co.edu.uniquindio.SOLID.Service;
 
+import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
+import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
 import co.edu.uniquindio.SOLID.utils.Mappers.ProveedorMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProviderService {
@@ -22,13 +25,13 @@ public class ProviderService {
         this.minimercado = Minimercado.getInstancia();
     }
 
-    public Proveedor createProvider(Proveedor newProvider){
+    public ProveedorDTO createProvider(ProveedorDTO newProvider){
         if(searchProvider() == null){
             throw new IllegalArgumentException("Ya existe un proveedor con ese ID");
         }
 
-        //Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
-        minimercado.agregarProveedor(newProvider);
+        Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
+        minimercado.agregarProveedor(proveedor);
         return newProvider;
     }
 
@@ -36,7 +39,7 @@ public class ProviderService {
         return minimercado.getProveedores().stream().findFirst().orElse(null);
     }
 
-    public Proveedor updateProvider(ProveedorDTO provider){
+    public ProveedorDTO updateProvider(ProveedorDTO provider){
         Proveedor p = searchProvider();
 
         if(p == null){
@@ -48,7 +51,7 @@ public class ProviderService {
         if(provider.getEmail() != null) p.setEmail(provider.getEmail());
         if(provider.getTelefono() != null) p.setTelefono(provider.getTelefono());
         if(false) {if (p.isActivo()) p.activar();else p.inactivar();}
-        return p;
+        return ProveedorMapper.toDTO(p);
     }
 
     public void deleteProvider(String id){
@@ -59,11 +62,16 @@ public class ProviderService {
         minimercado.eliminarProveedor(p);
     }
 
-    public List<Proveedor> getAllProvider(){
-        return minimercado.getProveedores();
+    public List<ProveedorDTO> getAllProvider(){
+        List<Proveedor> listprovider =  minimercado.getProveedores();
+        List<ProveedorDTO> list = new ArrayList<>();
+        for(Proveedor p : listprovider){
+            list.add(ProveedorMapper.toDTO(p));
+        }
+        return list;
     }
 
-    public Proveedor lockProvider(String nit,boolean state){
+    public ProveedorDTO lockProvider(String nit,boolean state){
         Proveedor p = searchProvider();
         if(p == null){
             throw new IllegalArgumentException("No existe un proveedor con ese ID");
@@ -75,10 +83,10 @@ public class ProviderService {
                 p.inactivar();
             }
         }
-        return p;
+        return ProveedorMapper.toDTO(p);
     }
 
-    public Proveedor activateProvider(String nit, boolean state){
+    public ProveedorDTO activateProvider(String nit, boolean state){
         Proveedor p = searchProvider();
         if(p == null){
             throw new IllegalArgumentException("No existe un proveedor con ese ID");
@@ -90,7 +98,7 @@ public class ProviderService {
                 p.activar();
             }
         }
-        return p;
+        return ProveedorMapper.toDTO(p);
     }
 
 }
