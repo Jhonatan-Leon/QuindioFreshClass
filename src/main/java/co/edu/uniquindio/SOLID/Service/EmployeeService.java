@@ -27,13 +27,13 @@ public class EmployeeService {
         }
     }
 
-    public Empleado createEmployee(Empleado newEmployee) {
+    public Empleado createEmployee(EmpleadoDTO newEmployee) {
         if(searchEmployee(newEmployee.getId()) != null){
             throw new IllegalArgumentException("Ya existe un empleado con ese ID");
         }
-
-        minimercado.addEmpleado(newEmployee);
-        return newEmployee;
+        Empleado emp = EmpleadoMapper.toEntity(newEmployee);
+        minimercado.addEmpleado(emp);
+        return emp;
     }
 
 
