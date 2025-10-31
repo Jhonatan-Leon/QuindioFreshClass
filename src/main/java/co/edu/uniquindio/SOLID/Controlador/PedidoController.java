@@ -138,8 +138,8 @@ public class PedidoController implements Initializable {
 
     private void cargarProductos() {
         if (cmbProductos != null) {
-            List<ProductoDTO> productosDTO = productFacade.getAllProducts();
-            cmbProductos.setItems(FXCollections.observableArrayList(productosDTO));
+            List<ProductoDTO> productos = productFacade.getAllProducts();
+            cmbProductos.setItems(FXCollections.observableArrayList(productos));
             
             // Configurar cómo se muestra el producto
             cmbProductos.setButtonCell(new ListCell<ProductoDTO>() {

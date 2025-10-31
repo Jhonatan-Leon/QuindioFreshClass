@@ -41,7 +41,4 @@ public class ProductFacade {
         return ProductoService.eliminarProducto(Sku);
     }
 
-    public boolean existProduct(String Sku){
-        return ProductoService.existeProducto(Sku);
-    }
 }
