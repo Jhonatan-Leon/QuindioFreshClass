@@ -16,7 +16,7 @@ public class EntradaInventario {
     private boolean confirmada;
     private List<MovimientoInventario> movimientosGenerados;
 
-    public EntradaInventario(String id, ProveedorDTO proveedor) {
+    public EntradaInventario(String id, Proveedor proveedor) {
         this.id = id;
         this.proveedor = proveedor;
         this.fecha = LocalDateTime.now();
