@@ -19,10 +19,10 @@ public class ProductoService {
     /**
      * Obtiene todos los productos como DTOs
      */
-    public List<Producto> obtenerTodosLosProductos() {
-        List<Producto> productos = new ArrayList<>();
+    public List<ProductoDTO> obtenerTodosLosProductos() {
+        List<ProductoDTO> productos = new ArrayList<>();
         for (Producto producto : minimercado.getProductos()) {
-            productos.add(producto);
+            productos.add(ProductoMapper.toDTO(producto));
         }
         return productos;
     }
