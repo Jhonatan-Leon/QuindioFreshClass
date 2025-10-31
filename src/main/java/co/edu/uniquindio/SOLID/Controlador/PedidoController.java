@@ -3,7 +3,8 @@ package co.edu.uniquindio.SOLID.Controlador;
 import co.edu.uniquindio.SOLID.Model.*;
 import co.edu.uniquindio.SOLID.Model.DTO.*;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ClientFacade;
-import co.edu.uniquindio.SOLID.Service.Fachadas.MinimercadoFacade;
+import co.edu.uniquindio.SOLID.Service.Fachadas.OrderFacade;
+import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -42,12 +43,12 @@ public class PedidoController implements Initializable {
     @FXML private TextArea txtResultado;
 
     private ClientFacade clientFacade = ClientFacade.getInstance();
-    private MinimercadoFacade minimercadoFacade;
+    private ProductFacade productFacade = ProductFacade.getInstance();
+    private OrderFacade orderFacade = OrderFacade.getInstance();
     private ObservableList<ItemPedidoDTO> itemsPedido;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        minimercadoFacade = new MinimercadoFacade();
         itemsPedido = FXCollections.observableArrayList();
         
         // Configurar tabla
@@ -137,7 +138,7 @@ public class PedidoController implements Initializable {
 
     private void cargarProductos() {
         if (cmbProductos != null) {
-            List<ProductoDTO> productosDTO = minimercadoFacade.obtenerTodosLosProductos();
+            List<ProductoDTO> productosDTO = productFacade.getAllProducts();
             cmbProductos.setItems(FXCollections.observableArrayList(productosDTO));
             
             // Configurar cómo se muestra el producto
@@ -230,12 +231,12 @@ public class PedidoController implements Initializable {
             pedidoDTO.codigoDescuento = txtCodigoDescuento.getText();
             
             // Procesar pedido usando el Facade
-            ResumenPedidoDTO resultado = minimercadoFacade.procesarPedido(pedidoDTO);
+            ResumenPedidoDTO resultado = orderFacade.processOrder(pedidoDTO);
             
             // Calcular totales
             double subtotal = calcularSubtotal();
             double costoEnvio = calcularCostoEnvio();
-            double total = minimercadoFacade.calcularTotal(subtotal, costoEnvio);
+            double total = orderFacade.calcularTotal(subtotal, costoEnvio);
             
             // Mostrar resultado
             txtResultado.setText(
@@ -336,7 +337,7 @@ public class PedidoController implements Initializable {
     private void actualizarTotales() {
         double subtotal = calcularSubtotal();
         double costoEnvio = calcularCostoEnvio();
-        double total = minimercadoFacade.calcularTotal(subtotal, costoEnvio);
+        double total = orderFacade.calcularTotal(subtotal, costoEnvio);
 
         if (lblSubtotal != null) lblSubtotal.setText(String.format("$%.2f", subtotal));
         if (lblCostoEnvio != null) lblCostoEnvio.setText(String.format("$%.2f", costoEnvio));
@@ -344,16 +345,16 @@ public class PedidoController implements Initializable {
     }
 
     private double calcularSubtotal() {
-        return minimercadoFacade.calcularSubtotal(itemsPedido);
+        return orderFacade.calcularSubtotal(itemsPedido);
     }
 
     private double calcularCostoEnvio() {
         String tipoEnvio = cmbTipoEnvio != null ? cmbTipoEnvio.getValue() : "ESTANDAR";
-        return minimercadoFacade.calcularCostoEnvio(tipoEnvio);
+        return orderFacade.calcularCostoEnvio(tipoEnvio);
     }
 
     private ProductoDTO buscarProductoPorSku(String sku) {
-        return minimercadoFacade.buscarProductoPorSku(sku);
+        return productFacade.searchProduct(sku);
     }
 
     private void mostrarError(String mensaje) {
