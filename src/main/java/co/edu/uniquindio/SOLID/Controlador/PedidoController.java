@@ -42,9 +42,9 @@ public class PedidoController implements Initializable {
     @FXML private Label lblTotal;
     @FXML private TextArea txtResultado;
 
-    private ClientFacade clientFacade = ClientFacade.getInstance();
-    private ProductFacade productFacade = ProductFacade.getInstance();
-    private OrderFacade orderFacade = OrderFacade.getInstance();
+    private final ClientFacade clientFacade = ClientFacade.getInstance();
+    private final ProductFacade productFacade = ProductFacade.getInstance();
+    private final OrderFacade orderFacade = OrderFacade.getInstance();
     private ObservableList<ItemPedidoDTO> itemsPedido;
 
     @Override
@@ -110,7 +110,7 @@ public class PedidoController implements Initializable {
             cmbClientes.setItems(FXCollections.observableArrayList(clientesDTO));
             
             // Configurar cómo se muestra el cliente
-            cmbClientes.setButtonCell(new ListCell<ClienteDTO>() {
+            cmbClientes.setButtonCell(new ListCell<>() {
                 @Override
                 protected void updateItem(ClienteDTO item, boolean empty) {
                     super.updateItem(item, empty);
