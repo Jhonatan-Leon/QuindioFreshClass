@@ -1,5 +1,8 @@
 package co.edu.uniquindio.SOLID.Model;
 
+import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
+import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +30,10 @@ public class EntradaInventario {
     public List<ItemEntrada> getItems() { return items; }
     public boolean isConfirmada() { return confirmada; }
 
-    public void agregarItem(Producto producto, int cantidad) {
+    public void agregarItem(ProductoDTO producto, int cantidad) {
         if (cantidad <= 0) return;
-        items.add(new ItemEntrada(producto, cantidad));
+        Producto productoEntidad = ProductoMapper.toEntity(producto);
+        items.add(new ItemEntrada(productoEntidad, cantidad));
     }
 
     public void confirmar() {
