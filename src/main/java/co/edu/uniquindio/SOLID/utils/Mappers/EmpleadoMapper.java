@@ -9,8 +9,7 @@ public class EmpleadoMapper {
         return new EmpleadoDTO(
             entidad.getId(),
             entidad.getNombre(),
-            entidad.getRol(),
-            entidad.isActivo()
+            entidad.getRol()
         );
     }
 

@@ -40,7 +40,7 @@ public class EmpleadosController implements Initializable {
         if (tblEmpleados != null) {
             colEmpId.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getId()));
             colEmpNombre.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getNombre()));
-            colEmpRol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getRol().name()));
+            colEmpRol.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getRol()));
             colEmpEstado.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().isActivo() ? "Activo" : "Inactivo"));
             tblEmpleados.setItems(empleados);
         }
@@ -85,7 +85,7 @@ public class EmpleadosController implements Initializable {
         String rol = cmbEmpRol != null ? cmbEmpRol.getValue() : null;
         if (id == null || id.trim().isEmpty()) { mostrarError("El ID es obligatorio"); return; }
         try {
-            Empleado actualizado = employeeFacade.updateEmployee(new EmpleadoDTO(id, nombre, rol, null));
+            Empleado actualizado = employeeFacade.updateEmployee(new EmpleadoDTO(id, nombre, rol));
             for (int i = 0; i < empleados.size(); i++) {
                 if (empleados.get(i).getId().equals(id)) { empleados.set(i, actualizado); break; }
             }
