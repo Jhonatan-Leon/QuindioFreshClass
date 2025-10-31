@@ -30,8 +30,5 @@ public class EmpleadoDTO {
 
     public boolean getActivo() { return activo; }
 
-    public boolean isActivo() { this.activo = activo;
-        return false;
-    }
 
 }
