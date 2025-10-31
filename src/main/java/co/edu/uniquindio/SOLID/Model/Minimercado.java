@@ -1,6 +1,7 @@
 package co.edu.uniquindio.SOLID.Model;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
+import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class Minimercado {
 
 
     // Nota: la confirmación y registro de movimientos se hace en EntradaInventario.confirmar()
-    public EntradaInventario registrarEntradaInventario(Proveedor proveedor, ProductoDTO producto, int cantidad) {
+    public EntradaInventario registrarEntradaInventario(ProveedorDTO proveedor, ProductoDTO producto, int cantidad) {
         if (proveedor == null) {
             throw new IllegalArgumentException("Se requiere un proveedor");
         }
