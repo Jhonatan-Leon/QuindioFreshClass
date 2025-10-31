@@ -1,6 +1,7 @@
 package co.edu.uniquindio.SOLID.Service.Fachadas;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
+import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Service.ProductoService;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class ProductFacade {
         this.ProductoService = new ProductoService();
     }
 
-    public List<ProductoDTO> getAllProducts() {
+    public List<Producto> getAllProducts() {
         return ProductoService.obtenerTodosLosProductos();
     }
 
