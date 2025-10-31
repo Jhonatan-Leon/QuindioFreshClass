@@ -1,7 +1,6 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
 import co.edu.uniquindio.SOLID.Model.DTO.EmpleadoDTO;
-import co.edu.uniquindio.SOLID.Model.Empleado;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Service.Fachadas.EmployeeFacade;
 import javafx.collections.FXCollections;
@@ -18,19 +17,19 @@ public class EmpleadosController implements Initializable {
     @FXML private TextField txtEmpId;
     @FXML private TextField txtEmpNombre;
     @FXML private ComboBox<String> cmbEmpRol;
-    @FXML private TableView<Empleado> tblEmpleados;
-    @FXML private TableColumn<Empleado, String> colEmpId;
-    @FXML private TableColumn<Empleado, String> colEmpNombre;
-    @FXML private TableColumn<Empleado, String> colEmpRol;
-    @FXML private TableColumn<Empleado, String> colEmpEstado;
+    @FXML private TableView<EmpleadoDTO> tblEmpleados;
+    @FXML private TableColumn<EmpleadoDTO, String> colEmpId;
+    @FXML private TableColumn<EmpleadoDTO, String> colEmpNombre;
+    @FXML private TableColumn<EmpleadoDTO, String> colEmpRol;
+    @FXML private TableColumn<EmpleadoDTO, String> colEmpEstado;
 
-    private ObservableList<Empleado> empleados;
+    private ObservableList<EmpleadoDTO> empleados;
     private EmployeeFacade employeeFacade = EmployeeFacade.getInstance();
     private Minimercado minimercado = Minimercado.getInstancia();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        empleados = FXCollections.observableArrayList(minimercado.getEmpleados());
+        empleados = FXCollections.observableArrayList(employeeFacade.getAllEmployee());
         
         if (cmbEmpRol != null) {
             cmbEmpRol.setItems(FXCollections.observableArrayList("CAJERO", "BODEGUERO"));
@@ -66,7 +65,7 @@ public class EmpleadosController implements Initializable {
         }
         
         try {
-            Empleado emp = employeeFacade.addEmployee(new EmpleadoDTO(id, nombre, rol));
+            EmpleadoDTO emp = employeeFacade.addEmployee(new EmpleadoDTO(id, nombre, rol));
             empleados.add(emp);
             if (tblEmpleados != null) tblEmpleados.refresh();
             if (txtEmpId != null) txtEmpId.clear();
@@ -84,7 +83,7 @@ public class EmpleadosController implements Initializable {
         String rol = cmbEmpRol != null ? cmbEmpRol.getValue() : null;
         if (id == null || id.trim().isEmpty()) { mostrarError("El ID es obligatorio"); return; }
         try {
-            Empleado actualizado = employeeFacade.updateEmployee(new EmpleadoDTO(id, nombre, rol));
+            EmpleadoDTO actualizado = employeeFacade.updateEmployee(new EmpleadoDTO(id, nombre, rol));
             for (int i = 0; i < empleados.size(); i++) {
                 if (empleados.get(i).getId().equals(id)) { empleados.set(i, actualizado); break; }
             }
@@ -112,7 +111,7 @@ public class EmpleadosController implements Initializable {
         String id = txtEmpId != null ? txtEmpId.getText() : null;
         if (id == null || id.trim().isEmpty()) { mostrarError("El ID es obligatorio"); return; }
         try {
-            Empleado actualizado = employeeFacade.activateEmployee(id,true);
+            EmpleadoDTO actualizado = employeeFacade.activateEmployee(id,true);
             for (int i = 0; i < empleados.size(); i++) { if (empleados.get(i).getId().equals(id)) { empleados.set(i, actualizado); break; } }
             if (tblEmpleados != null) tblEmpleados.refresh();
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
@@ -123,7 +122,7 @@ public class EmpleadosController implements Initializable {
         String id = txtEmpId != null ? txtEmpId.getText() : null;
         if (id == null || id.trim().isEmpty()) { mostrarError("El ID es obligatorio"); return; }
         try {
-            Empleado actualizado = employeeFacade.lockEmployee(id,  false);
+            EmpleadoDTO actualizado = employeeFacade.lockEmployee(id,  false);
             for (int i = 0; i < empleados.size(); i++) { if (empleados.get(i).getId().equals(id)) { empleados.set(i, actualizado); break; } }
             if (tblEmpleados != null) tblEmpleados.refresh();
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
