@@ -25,7 +25,7 @@ public class InventoryService {
         if (cantidad <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
         }
-        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), ProveedorMapper.toDTO(proveedor));
+        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), ProveedorMapper.toEntity(proveedor));
         entrada.agregarItem(producto, cantidad);
         entrada.confirmar();
         return entrada;

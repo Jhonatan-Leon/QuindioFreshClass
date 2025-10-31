@@ -7,24 +7,13 @@ import co.edu.uniquindio.SOLID.utils.Mappers.EmpleadoMapper;
 
 public class EmployeeService {
     private static EmployeeService Instance;
-    private final Minimercado minimercado;
+    private final Minimercado minimercado = Minimercado.getInstancia();
 
     public static EmployeeService getInstance() {
         if (Instance == null) {
-            Instance = new EmployeeService(Minimercado.getInstancia());
+            Instance = new EmployeeService();
         }
         return Instance;
-    }
-
-    public EmployeeService(Minimercado minimercado) {
-        this.minimercado = Minimercado.getInstancia();
-    }
-
-    public void addEmployee(EmpleadoDTO newEmployee){
-        if(newEmployee != null){
-         Empleado empleado = EmpleadoMapper.toEntity(newEmployee);
-         minimercado.addEmpleado(empleado);
-        }
     }
 
     public EmpleadoDTO getAll(){
@@ -55,16 +44,12 @@ public class EmployeeService {
             throw new IllegalArgumentException("No existe un empleado con ese ID");
         }
 
-<<<<<<< HEAD
-        EmpleadoMapper.updateEntityFromDTO(e, employee);
-=======
         if (employee.getNombre() != null) e.setNombre(employee.getNombre());
         if (employee.getRol() != null) e.setRol(employee.getRol());
-        if (false) {if (employee.getActivo()) e.activar();else e.inactivar(); }
-        return EmpleadoMapper.toDTO(e);
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
+        if(employee.getActivo()) e.activar();else e.inactivar();
+        if(employee.getRol() != null) e.setRol(employee.getRol());
 
-        return e;
+        return EmpleadoMapper.toDTO(e);
     }
 
     public void deleteEmployee(String id){

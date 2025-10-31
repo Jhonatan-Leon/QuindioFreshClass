@@ -25,25 +25,15 @@ public class ProviderFacade {
         return providerService.getAllProvider();
     }
 
-<<<<<<< HEAD
-    public Proveedor CreateProvider(ProveedorDTO newProvider){
-       Proveedor provider = providerService.createProvider(newProvider);
-=======
     public ProveedorDTO CreateProvider(ProveedorDTO newProvider){
-       ProveedorDTO provider = providerService.createProvider(newProvider);
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
-       return provider;
+        return providerService.createProvider(newProvider);
     }
 
     public Proveedor searchProvider(){
         return providerService.searchProvider();
     }
 
-<<<<<<< HEAD
-    public Proveedor updateProvider(Proveedor provider){
-=======
     public ProveedorDTO updateProvider(ProveedorDTO provider){
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
         return providerService.updateProvider(provider);
     }
 

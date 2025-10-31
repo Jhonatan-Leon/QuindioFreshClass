@@ -2,7 +2,6 @@ package co.edu.uniquindio.SOLID.Service;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
-import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
 import co.edu.uniquindio.SOLID.utils.Mappers.ProveedorMapper;
 
@@ -29,7 +28,7 @@ public class ProviderService {
             throw new IllegalArgumentException("Ya existe un proveedor con ese ID");
         }
 
-        Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
+        Proveedor proveedor = ProveedorMapper.toEntity(newProvider);
         minimercado.agregarProveedor(proveedor);
         return newProvider;
     }
@@ -49,7 +48,7 @@ public class ProviderService {
         if(provider.getContacto() != null) p.setContacto(provider.getContacto());
         if(provider.getEmail() != null) p.setEmail(provider.getEmail());
         if(provider.getTelefono() != null) p.setTelefono(provider.getTelefono());
-        if(false) {if (p.isActivo()) p.activar();else p.inactivar();}
+
         return ProveedorMapper.toDTO(p);
     }
 
@@ -97,7 +96,7 @@ public class ProviderService {
                 p.activar();
             }
         }
-        return p;
+        return ProveedorMapper.toDTO(p);
     }
 
 }

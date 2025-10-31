@@ -5,11 +5,6 @@ import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Service.Fachadas.InventoryFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
-<<<<<<< HEAD
-import co.edu.uniquindio.SOLID.Service.ProviderService;
-import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
-=======
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -100,14 +95,7 @@ public class InventarioController implements Initializable {
         }
         
         try {
-<<<<<<< HEAD
-            ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            Proveedor p = providerFacade.CreateProvider(newp);
-            proveedores.add(p);
-=======
-            ProveedorDTO p = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            providerFacade.CreateProvider(p);
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
+            ProveedorDTO p = providerFacade.CreateProvider(new ProveedorDTO(nit, nombre, contacto, email, telefono));
             if (cmbProveedores != null) cmbProveedores.getSelectionModel().select(p);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Proveedor creado: " + nombre);
             if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
@@ -130,21 +118,12 @@ public class InventarioController implements Initializable {
         String telefono = txtProvTelefono != null ? txtProvTelefono.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-<<<<<<< HEAD
-            ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            Proveedor proveedorEntity = providerFacade.CreateProvider(newp);
-            Proveedor actualizado = providerFacade.updateProvider(proveedorEntity);
+
+
+            ProveedorDTO actualizado = providerFacade.updateProvider(new ProveedorDTO(nit, nombre, contacto, email, telefono));
             for (int i = 0; i < proveedores.size(); i++) {
                 if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
             }
-=======
-            ProveedorDTO actualizado = providerFacade.updateProvider(new ProveedorDTO(nit, nombre, contacto, email, telefono));
-            for (int i = 0; i < proveedores.size(); i++)
-                if (proveedores.get(i).getNit().equals(nit)) {
-                    proveedores.set(i, actualizado);
-                    break;
-                }
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
     }
@@ -203,15 +182,9 @@ public class InventarioController implements Initializable {
         }
         
         try {
-<<<<<<< HEAD
-            minimercado.registrarEntradaInventario(proveedor, prod, cant);
-            Producto prodU = ProductoMapper.toEntity(prod);
-            prod.setStock(prod.getStock() + cant);
-            if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prodU.getStock());
-=======
             inventory.registerInventario(proveedor, prod, cant);
+            prod.setStock(prod.getStock() + cant);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prod.getStock());
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
             if (tblProductosInv != null) tblProductosInv.refresh();
         } catch (IllegalArgumentException e) {
             mostrarError(e.getMessage());

@@ -1,9 +1,5 @@
 package co.edu.uniquindio.SOLID.Model;
 
-import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
-import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
-import co.edu.uniquindio.SOLID.utils.Mappers.ProveedorMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,27 +90,4 @@ public class Minimercado {
         empleados.remove(empleado);
     }
 
-
-
-    // Nota: la confirmación y registro de movimientos se hace en EntradaInventario.confirmar()
-    public EntradaInventario registrarEntradaInventario(ProveedorDTO proveedor, ProductoDTO producto, int cantidad) {
-        if (proveedor == null) {
-            throw new IllegalArgumentException("Se requiere un proveedor");
-        }
-        if (producto == null) {
-            throw new IllegalArgumentException("Se requiere un producto");
-        }
-        if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
-        }
-<<<<<<< HEAD
-        
-        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), proveedor);
-=======
-        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), ProveedorMapper.toDTO(proveedor));
->>>>>>> c07f64978a64f74153521ac912e7397272c25aff
-        entrada.agregarItem(producto, cantidad);
-        entrada.confirmar();
-        return entrada;
-    }
 }
