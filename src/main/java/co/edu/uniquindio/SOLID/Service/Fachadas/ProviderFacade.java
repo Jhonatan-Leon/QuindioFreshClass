@@ -21,12 +21,12 @@ public class ProviderFacade {
         this.providerService = ProviderService.getInstance();
     }
 
-    public List<Proveedor> getAllProviders(){
+    public List<ProveedorDTO> getAllProviders(){
         return providerService.getAllProvider();
     }
 
-    public Proveedor CreateProvider(Proveedor newProvider){
-       Proveedor provider = providerService.createProvider(newProvider);
+    public ProveedorDTO CreateProvider(ProveedorDTO newProvider){
+       ProveedorDTO provider = providerService.createProvider(newProvider);
        return provider;
     }
 
@@ -34,7 +34,7 @@ public class ProviderFacade {
         return providerService.searchProvider();
     }
 
-    public Proveedor updateProvider(ProveedorDTO provider){
+    public ProveedorDTO updateProvider(ProveedorDTO provider){
         return providerService.updateProvider(provider);
     }
 
@@ -42,11 +42,11 @@ public class ProviderFacade {
         providerService.deleteProvider(id);
     }
 
-    public Proveedor lockProvider(String nit,boolean state){
+    public ProveedorDTO lockProvider(String nit,boolean state){
         return providerService.lockProvider(nit,state);
     }
 
-    public Proveedor activateProvider(String nit, boolean state){
+    public ProveedorDTO activateProvider(String nit, boolean state){
         return providerService.activateProvider(nit, state);
     }
 
