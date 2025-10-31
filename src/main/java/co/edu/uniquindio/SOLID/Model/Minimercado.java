@@ -2,6 +2,7 @@ package co.edu.uniquindio.SOLID.Model;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
+import co.edu.uniquindio.SOLID.utils.Mappers.ProveedorMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,7 @@ public class Minimercado {
         if (cantidad <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
         }
-        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), proveedor);
+        EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), ProveedorMapper.toDTO(proveedor));
         entrada.agregarItem(producto, cantidad);
         entrada.confirmar();
         return entrada;
