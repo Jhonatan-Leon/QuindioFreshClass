@@ -15,8 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PedidoService {
+    private static PedidoService Instance;
     CatalogoProductosService catalogoProductosService;
     ClienteService clienteService;
+
+    public static PedidoService getInstance(){
+        if(Instance == null){
+            Instance = new PedidoService(new CatalogoProductosService());
+        }
+        return Instance;
+    }
 
     public PedidoService(CatalogoProductosService catalogoProductosService) {
         this.catalogoProductosService = catalogoProductosService;
@@ -126,4 +134,5 @@ public class PedidoService {
     public double calcularTotal(double subtotal, double costoEnvio) {
         return subtotal + costoEnvio;
     }
+
 }
