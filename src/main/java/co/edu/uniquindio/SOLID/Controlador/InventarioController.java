@@ -164,7 +164,7 @@ public class InventarioController implements Initializable {
     void confirmarEntradaInventario() {
         Proveedor proveedor = cmbProveedores != null ? cmbProveedores.getValue() : null;
         Producto prod = cmbProductoEntrada != null ? cmbProductoEntrada.getValue() : null;
-        Integer cant = spnCantidadEntrada != null ? spnCantidadEntrada.getValue() : 0;
+        int cant = spnCantidadEntrada != null ? spnCantidadEntrada.getValue() : 0;
         
         // Validaciones de campos
         if (proveedor == null) {
@@ -175,7 +175,7 @@ public class InventarioController implements Initializable {
             mostrarError("Seleccione un producto");
             return;
         }
-        if (cant == null || cant <= 0) {
+        if (cant <= 0) {
             mostrarError("Cantidad inválida");
             return;
         }
