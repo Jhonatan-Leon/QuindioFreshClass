@@ -5,14 +5,13 @@ import co.edu.uniquindio.SOLID.Model.Empleado;
 public class EmpleadoDTO {
     public String id;
     public String nombre;
-    public Empleado.Rol rol;
-    public boolean activo;
+    public String rol;
+    public boolean activo = true;
 
-    public EmpleadoDTO(String id, String nombre, Empleado.Rol rol, boolean activo) {
+    public EmpleadoDTO(String id, String nombre, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.rol = rol;
-        this.activo = activo;
     }
 
     public String getNombre() {
@@ -23,9 +22,9 @@ public class EmpleadoDTO {
         this.nombre = nombre;
     }
 
-    public Empleado.Rol getRol() { return rol; }
+    public String getRol() { return rol; }
 
-    public void setRol( Empleado.Rol rol ) { this.rol = rol; }
+    public void setRol( String rol ) { this.rol = rol; }
 
     public String getId() { return id; }
 

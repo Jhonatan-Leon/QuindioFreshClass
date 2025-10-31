@@ -98,9 +98,9 @@ public class AppSetup {
 
     public void inicializarEmpleados() {
         Minimercado minimercado = Minimercado.getInstancia();
-        minimercado.agregarEmpleado(new Empleado("EMP-001", "Julian", Empleado.Rol.CAJERO));
-        minimercado.agregarEmpleado(new Empleado("EMP-002", "Andrea", Empleado.Rol.BODEGUERO));
-        minimercado.agregarEmpleado(new Empleado("EMP-003", "Pablo", Empleado.Rol.CAJERO));
+        minimercado.agregarEmpleado(new Empleado("EMP-001", "Julian", "CAJERO"));
+        minimercado.agregarEmpleado(new Empleado("EMP-002", "Andrea", "BODEGUERO"));
+        minimercado.agregarEmpleado(new Empleado("EMP-003", "Pablo", "CAJERO"));
     }
 
 }
