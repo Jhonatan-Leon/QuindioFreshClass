@@ -4,6 +4,7 @@ import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
+import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,11 +37,12 @@ public class InventarioController implements Initializable {
     private ObservableList<Producto> productos;
     private Minimercado minimercado = Minimercado.getInstancia();
     private ProviderFacade providerFacade = ProviderFacade.getInstance();
+    private ProductFacade productFacade = ProductFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         proveedores = FXCollections.observableArrayList(providerFacade.getAllProviders());
-        productos = FXCollections.observableArrayList(minimercado.getProductos());
+        productos = FXCollections.observableArrayList(productFacade.getAllProducts());
         
         if (cmbProveedores != null) {
             cmbProveedores.setItems(proveedores);
