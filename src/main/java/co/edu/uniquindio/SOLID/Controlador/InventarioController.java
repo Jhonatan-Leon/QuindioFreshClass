@@ -122,9 +122,11 @@ public class InventarioController implements Initializable {
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
             ProveedorDTO actualizado = providerFacade.updateProvider(new ProveedorDTO(nit, nombre, contacto, email, telefono));
-            for (int i = 0; i < proveedores.size(); i++) {
-                if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
-            }
+            for (int i = 0; i < proveedores.size(); i++)
+                if (proveedores.get(i).getNit().equals(nit)) {
+                    proveedores.set(i, actualizado);
+                    break;
+                }
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
     }
