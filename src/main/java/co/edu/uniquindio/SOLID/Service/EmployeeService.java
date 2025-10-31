@@ -27,14 +27,13 @@ public class EmployeeService {
         }
     }
 
-    public EmpleadoDTO createEmployee(EmpleadoDTO newEmployee) {
+    public Empleado createEmployee(Empleado newEmployee) {
         if(searchEmployee(newEmployee.getId()) != null){
             throw new IllegalArgumentException("Ya existe un empleado con ese ID");
         }
 
-        Empleado empleado = EmpleadoMapper.toEntity(newEmployee);
-        minimercado.addEmpleado(empleado);
-        return EmpleadoMapper.toDTO(empleado);
+        minimercado.addEmpleado(newEmployee);
+        return newEmployee;
     }
 
 
@@ -64,9 +63,34 @@ public class EmployeeService {
         if(e == null){
             throw new IllegalArgumentException("No existe un empleado con ese ID");
         }
-        minimercado.eliminarEmpleado(id);
+        minimercado.eliminarEmpleado(e);
     }
 
+    public Empleado lockEmployee(String id,boolean state){
+        Empleado e = searchEmployee(id);
+        if(e == null){
+            throw new IllegalArgumentException("No existe un empleado con ese ID");
+        }
+        if(state){
+            e.activar();
+        }else{
+            e.inactivar();
+        }
+        return e;
+    }
+
+    public Empleado activateEmployee(String id, boolean state){
+        Empleado e = searchEmployee(id);
+        if(e == null){
+            throw new IllegalArgumentException("No existe un empleado con ese ID");
+        }
+        if(state){
+            e.activar();
+        }else{
+            e.inactivar();
+        }
+        return e;
+    }
 
 
 }
