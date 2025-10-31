@@ -2,7 +2,6 @@ package co.edu.uniquindio.SOLID.Controlador;
 
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
-import co.edu.uniquindio.SOLID.Service.Fachadas.MinimercadoFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,14 +32,12 @@ public class ProductoController implements Initializable {
     
     @FXML private Label lblMensaje;
 
-    private MinimercadoFacade minimercadoFacade;
     private ObservableList<ProductoDTO> productos;
     private ProductoDTO productoSeleccionado;
     private ProductFacade productFacade = ProductFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        minimercadoFacade = new MinimercadoFacade();
         productos = FXCollections.observableArrayList();
         
         configurarTabla();
