@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.SOLID.Controlador.InventarioController" spacing="10.0">
+<VBox spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.SOLID.Controlador.InventarioController">
   <padding>
     <Insets topRightBottomLeft="10.0" />
   </padding>
@@ -12,13 +20,13 @@
     <Label text="Registrar Entrada de Inventario" />
     <HBox spacing="10.0">
       <children>
-        <Label text="Proveedor:" minWidth="120.0" />
+        <Label minWidth="120.0" text="Proveedor:" />
         <ComboBox fx:id="cmbProveedores" prefWidth="250.0" promptText="Seleccione un proveedor" />
-        <Button onAction="#mostrarCrearProveedor" text="Nuevo Proveedor" />
+        <Button onAction="#mostrarCrearProveedor" text="Gestionar Proveedor" />
       </children>
     </HBox>
 
-    <TitledPane text="Proveedor" expanded="false" fx:id="tpCrearProveedor">
+    <TitledPane fx:id="tpCrearProveedor" expanded="false" text="Proveedor">
       <content>
         <VBox spacing="8.0">
           <padding>
@@ -46,7 +54,7 @@
 
     <HBox spacing="10.0">
       <children>
-        <Label text="Producto:" minWidth="120.0" />
+        <Label minWidth="120.0" text="Producto:" />
         <ComboBox fx:id="cmbProductoEntrada" prefWidth="250.0" />
         <Label text="Cantidad:" />
         <Spinner fx:id="spnCantidadEntrada" prefWidth="80.0" />
@@ -55,19 +63,17 @@
     </HBox>
     <Label fx:id="lblResultadoEntrada" text="" />
 
-    <TitledPane text="Productos en Inventario" expanded="true">
+    <TitledPane expanded="true" text="Productos en Inventario">
       <content>
         <TableView fx:id="tblProductosInv" prefHeight="260.0">
           <columns>
-            <TableColumn fx:id="colInvSku" text="SKU" prefWidth="140.0" />
-            <TableColumn fx:id="colInvNombre" text="Producto" prefWidth="260.0" />
-            <TableColumn fx:id="colInvPrecio" text="Precio" prefWidth="140.0" />
-            <TableColumn fx:id="colInvStock" text="Stock" prefWidth="120.0" />
+            <TableColumn fx:id="colInvSku" prefWidth="140.0" text="SKU" />
+            <TableColumn fx:id="colInvNombre" prefWidth="260.0" text="Producto" />
+            <TableColumn fx:id="colInvPrecio" prefWidth="140.0" text="Precio" />
+            <TableColumn fx:id="colInvStock" prefWidth="120.0" text="Stock" />
           </columns>
         </TableView>
       </content>
     </TitledPane>
   </children>
 </VBox>
-
-
