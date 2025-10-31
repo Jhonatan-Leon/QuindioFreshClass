@@ -1,6 +1,7 @@
 package co.edu.uniquindio.SOLID.Model;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
+import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class EntradaInventario {
     private boolean confirmada;
     private List<MovimientoInventario> movimientosGenerados;
 
-    public EntradaInventario(String id, Proveedor proveedor) {
+    public EntradaInventario(String id, ProveedorDTO proveedor) {
         this.id = id;
         this.proveedor = proveedor;
         this.fecha = LocalDateTime.now();
