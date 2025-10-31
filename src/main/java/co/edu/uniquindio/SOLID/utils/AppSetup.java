@@ -5,6 +5,7 @@ import co.edu.uniquindio.SOLID.Model.Empleado;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
+import co.edu.uniquindio.SOLID.Service.ProviderService;
 
 public class AppSetup {
 

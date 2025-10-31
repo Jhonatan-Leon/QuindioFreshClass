@@ -31,4 +31,11 @@ public class ProveedorMapper {
         entidad.setEmail(dto.getEmail());
         entidad.setTelefono(dto.getTelefono());
     }
+
+    public static Empleado toEntity(EmpleadoDTO dto) {
+        if (dto == null) return null;
+        return new Empleado(dto.getId(),
+                dto.getNombre(),
+                dto.getRol());
+    }
 }
