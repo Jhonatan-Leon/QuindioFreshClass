@@ -27,13 +27,17 @@ public class EmployeeService {
         }
     }
 
-    public Empleado createEmployee(EmpleadoDTO newEmployee) {
+    public EmpleadoDTO getAll(){
+        return minimercado.getEmpleados().stream().findFirst().map(EmpleadoMapper::toDTO).orElse(null);
+    }
+
+    public EmpleadoDTO createEmployee(EmpleadoDTO newEmployee) {
         if(searchEmployee(newEmployee.getId()) != null){
             throw new IllegalArgumentException("Ya existe un empleado con ese ID");
         }
         Empleado emp = EmpleadoMapper.toEntity(newEmployee);
         minimercado.addEmpleado(emp);
-        return emp;
+        return EmpleadoMapper.toDTO(emp);
     }
 
 
@@ -44,14 +48,21 @@ public class EmployeeService {
         return null;
     }
 
-    public Empleado updateEmployee(EmpleadoDTO employee) {
+    public EmpleadoDTO updateEmployee(EmpleadoDTO employee) {
         Empleado e = searchEmployee(employee.getId());
 
         if (e == null) {
             throw new IllegalArgumentException("No existe un empleado con ese ID");
         }
 
+<<<<<<< HEAD
         EmpleadoMapper.updateEntityFromDTO(e, employee);
+=======
+        if (employee.getNombre() != null) e.setNombre(employee.getNombre());
+        if (employee.getRol() != null) e.setRol(employee.getRol());
+        if (false) {if (employee.getActivo()) e.activar();else e.inactivar(); }
+        return EmpleadoMapper.toDTO(e);
+>>>>>>> c07f64978a64f74153521ac912e7397272c25aff
 
         return e;
     }
@@ -64,7 +75,7 @@ public class EmployeeService {
         minimercado.eliminarEmpleado(e);
     }
 
-    public Empleado lockEmployee(String id,boolean state){
+    public EmpleadoDTO lockEmployee(String id,boolean state){
         Empleado e = searchEmployee(id);
         if(e == null){
             throw new IllegalArgumentException("No existe un empleado con ese ID");
@@ -74,10 +85,10 @@ public class EmployeeService {
         }else{
             e.inactivar();
         }
-        return e;
+        return EmpleadoMapper.toDTO(e);
     }
 
-    public Empleado activateEmployee(String id, boolean state){
+    public EmpleadoDTO activateEmployee(String id, boolean state){
         Empleado e = searchEmployee(id);
         if(e == null){
             throw new IllegalArgumentException("No existe un empleado con ese ID");
@@ -87,7 +98,7 @@ public class EmployeeService {
         }else{
             e.inactivar();
         }
-        return e;
+        return EmpleadoMapper.toDTO(e);
     }
 
 

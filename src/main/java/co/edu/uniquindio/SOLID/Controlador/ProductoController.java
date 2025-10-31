@@ -1,6 +1,5 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
-import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import javafx.collections.FXCollections;
@@ -35,7 +34,7 @@ public class ProductoController implements Initializable {
 
     private ObservableList<ProductoDTO> productos;
     private ProductoDTO productoSeleccionado;
-    private ProductFacade productFacade = ProductFacade.getInstance();
+    private final ProductFacade productFacade = ProductFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
