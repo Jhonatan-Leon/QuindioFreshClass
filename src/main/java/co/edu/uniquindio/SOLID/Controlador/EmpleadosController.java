@@ -1,7 +1,6 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
 import co.edu.uniquindio.SOLID.Model.DTO.EmpleadoDTO;
-import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Service.Fachadas.EmployeeFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +23,7 @@ public class EmpleadosController implements Initializable {
     @FXML private TableColumn<EmpleadoDTO, String> colEmpEstado;
 
     private ObservableList<EmpleadoDTO> empleados;
-    private EmployeeFacade employeeFacade = EmployeeFacade.getInstance();
-    private Minimercado minimercado = Minimercado.getInstancia();
+    private final EmployeeFacade employeeFacade = EmployeeFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
