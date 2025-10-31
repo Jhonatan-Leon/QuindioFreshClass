@@ -1,5 +1,6 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
+import co.edu.uniquindio.SOLID.Facade.ClientFacade;
 import co.edu.uniquindio.SOLID.Model.DTO.ClienteDTO;
 import co.edu.uniquindio.SOLID.Service.Fachadas.MinimercadoFacade;
 import javafx.collections.FXCollections;
@@ -34,13 +35,12 @@ public class ClienteController implements Initializable {
     
     @FXML private Label lblMensaje;
 
-    private MinimercadoFacade minimercadoFacade;
+    static ClientFacade clientFacade = ClientFacade.getInstance();
     private ObservableList<ClienteDTO> clientes;
     private ClienteDTO clienteSeleccionado;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        minimercadoFacade = new MinimercadoFacade();
         clientes = FXCollections.observableArrayList();
         configurarTabla();
         cargarClientes();
@@ -71,7 +71,7 @@ public class ClienteController implements Initializable {
 
     private void cargarClientes() {
         clientes.clear();
-        clientes.addAll(minimercadoFacade.obtenerTodosLosClientes());
+        clientes.addAll(clientFacade.getAllClients());
         mostrarMensaje("Clientes cargados: " + clientes.size(), false);
     }
 
@@ -97,7 +97,7 @@ public class ClienteController implements Initializable {
                 txtTelefono.getText().trim()
             );
             
-            if (minimercadoFacade.agregarCliente(nuevoCliente)) {
+            if (clientFacade.addClient(nuevoCliente)) {
                 cargarClientes();
                 limpiarFormulario(null);
                 mostrarMensaje("Cliente agregado exitosamente", false);
@@ -128,7 +128,7 @@ public class ClienteController implements Initializable {
             clienteSeleccionado.setCorreo(txtCorreo.getText().trim());
             clienteSeleccionado.setTelefono(txtTelefono.getText().trim());
             
-            if (minimercadoFacade.actualizarCliente(clienteSeleccionado)) {
+            if (clientFacade.updateClient(clienteSeleccionado)) {
                 tblClientes.refresh();
                 mostrarMensaje("Cliente actualizado exitosamente", false);
                 System.out.println("Cliente actualizado: " + clienteSeleccionado.getCedula());
@@ -160,7 +160,7 @@ public class ClienteController implements Initializable {
             Optional<ButtonType> resultado = confirmacion.showAndWait();
             
             if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                if (minimercadoFacade.eliminarCliente(clienteSeleccionado.getCedula())) {
+                if (clientFacade.deleteClient(clienteSeleccionado.getCedula())) {
                     cargarClientes();
                     limpiarFormulario(null);
                     mostrarMensaje("Cliente eliminado exitosamente", false);
