@@ -2,11 +2,9 @@ package co.edu.uniquindio.SOLID.Controlador;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
-import co.edu.uniquindio.SOLID.Model.Minimercado;
-import co.edu.uniquindio.SOLID.Model.Producto;
+import co.edu.uniquindio.SOLID.Service.Fachadas.InventoryFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
-import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,9 +34,9 @@ public class InventarioController implements Initializable {
 
     private ObservableList<ProveedorDTO> proveedores;
     private ObservableList<ProductoDTO> productos;
-    private Minimercado minimercado = Minimercado.getInstancia();
     private final ProviderFacade providerFacade = ProviderFacade.getInstance();
     private final ProductFacade productFacade = ProductFacade.getInstance();
+    private final InventoryFacade inventory = InventoryFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -185,9 +183,8 @@ public class InventarioController implements Initializable {
         }
         
         try {
-            minimercado.registrarEntradaInventario(proveedor, prod, cant);
-            Producto prodU = ProductoMapper.toEntity(prod);
-            if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prodU.getStock());
+            inventory.registerInventario(proveedor, prod, cant);
+            if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prod.getStock());
             if (tblProductosInv != null) tblProductosInv.refresh();
         } catch (IllegalArgumentException e) {
             mostrarError(e.getMessage());
