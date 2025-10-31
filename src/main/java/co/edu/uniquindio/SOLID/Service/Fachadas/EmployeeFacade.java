@@ -17,7 +17,7 @@ public class EmployeeFacade {
         return Instance;
     }
 
-    public Empleado addEmployee(EmpleadoDTO newEmployee){
+    public EmpleadoDTO addEmployee(EmpleadoDTO newEmployee){
         return employeeService.createEmployee(newEmployee);
     }
 
@@ -25,7 +25,7 @@ public class EmployeeFacade {
         return employeeService.searchEmployee(Id);
     }
 
-    public Empleado updateEmployee(EmpleadoDTO employee){
+    public EmpleadoDTO updateEmployee(EmpleadoDTO employee){
         return employeeService.updateEmployee(employee);
     }
 
@@ -33,12 +33,16 @@ public class EmployeeFacade {
         employeeService.deleteEmployee(Id);
     }
 
-    public Empleado lockEmployee(String id,boolean state){
+    public EmpleadoDTO lockEmployee(String id,boolean state){
         return employeeService.lockEmployee(id,state);
     }
 
-    public Empleado activateEmployee(String id, boolean state){
+    public EmpleadoDTO activateEmployee(String id, boolean state){
         return employeeService.activateEmployee(id, state);
+    }
+
+    public EmpleadoDTO getAllEmployee(){
+        return employeeService.getAll();
     }
 
 }
