@@ -68,7 +68,7 @@ public class InventarioController implements Initializable {
             colInvSku.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getSku()));
             colInvNombre.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getNombre()));
             colInvPrecio.setCellValueFactory(cd -> new javafx.beans.property.SimpleDoubleProperty(cd.getValue().getPrecio()));
-            colInvStock.setCellValueFactory(cd -> new javafx.beans.property.SimpleIntegerProperty());
+            colInvStock.setCellValueFactory(cd -> new javafx.beans.property.SimpleIntegerProperty(Integer.parseInt(cd.getValue().getStock())));
             tblProductosInv.setItems(productos);
         }
         if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
