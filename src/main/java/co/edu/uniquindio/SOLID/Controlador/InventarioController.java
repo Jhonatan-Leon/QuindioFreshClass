@@ -1,9 +1,10 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
-import co.edu.uniquindio.SOLID.Model.EntradaInventario;
+import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
+import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,10 +35,11 @@ public class InventarioController implements Initializable {
     private ObservableList<Proveedor> proveedores;
     private ObservableList<Producto> productos;
     private Minimercado minimercado = Minimercado.getInstancia();
+    private ProviderFacade providerFacade = ProviderFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        proveedores = FXCollections.observableArrayList(minimercado.getProveedores());
+        proveedores = FXCollections.observableArrayList(providerFacade.getAllProviders());
         productos = FXCollections.observableArrayList(minimercado.getProductos());
         
         if (cmbProveedores != null) {
@@ -92,8 +94,8 @@ public class InventarioController implements Initializable {
         }
         
         try {
-            Proveedor p = minimercado.crearProveedor(nit, nombre, contacto, email, telefono);
-            proveedores.add(p);
+            Proveedor newp = new Proveedor(nit, nombre, contacto, email, telefono);
+            Proveedor p = providerFacade.CreateProvider(newp);
             if (cmbProveedores != null) cmbProveedores.getSelectionModel().select(p);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Proveedor creado: " + nombre);
             if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
@@ -116,7 +118,8 @@ public class InventarioController implements Initializable {
         String telefono = txtProvTelefono != null ? txtProvTelefono.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            Proveedor actualizado = minimercado.actualizarProveedor(nit, nombre, contacto, email, telefono, null);
+            ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
+            Proveedor actualizado = providerFacade.updateProvider(newp);
             for (int i = 0; i < proveedores.size(); i++) {
                 if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
             }
@@ -129,7 +132,7 @@ public class InventarioController implements Initializable {
         String nit = txtProvNit != null ? txtProvNit.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            minimercado.eliminarProveedor(nit);
+            providerFacade.deleteProvider(nit);
             proveedores.removeIf(p -> p.getNit().equals(nit));
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
@@ -140,7 +143,7 @@ public class InventarioController implements Initializable {
         String nit = txtProvNit != null ? txtProvNit.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            Proveedor actualizado = minimercado.actualizarProveedor(nit, null, null, null, null, true);
+            Proveedor actualizado = providerFacade.activateProvider(nit, true);
             for (int i = 0; i < proveedores.size(); i++) { if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; } }
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
@@ -151,7 +154,7 @@ public class InventarioController implements Initializable {
         String nit = txtProvNit != null ? txtProvNit.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            Proveedor actualizado = minimercado.actualizarProveedor(nit, null, null, null, null, false);
+            Proveedor actualizado = providerFacade.lockProvider(nit, false);
             for (int i = 0; i < proveedores.size(); i++) { if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; } }
             if (cmbProveedores != null) cmbProveedores.setItems(FXCollections.observableArrayList(proveedores));
         } catch (IllegalArgumentException e) { mostrarError(e.getMessage()); }
