@@ -121,8 +121,7 @@ public class InventarioController implements Initializable {
         String telefono = txtProvTelefono != null ? txtProvTelefono.getText() : null;
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
-            ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            ProveedorDTO actualizado = providerFacade.updateProvider(newp);
+            ProveedorDTO actualizado = providerFacade.updateProvider(new ProveedorDTO(nit, nombre, contacto, email, telefono));
             for (int i = 0; i < proveedores.size(); i++) {
                 if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
             }
