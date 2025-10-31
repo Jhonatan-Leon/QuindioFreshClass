@@ -41,6 +41,8 @@ public class Minimercado {
         clientes.add(cliente);
     }
 
+    public void addEmpleado(Empleado empleado) {empleados.add(empleado);}
+
     public List<Producto> getProductos() {
         return productos;
     }

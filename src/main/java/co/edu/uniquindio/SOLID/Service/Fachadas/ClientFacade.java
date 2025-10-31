@@ -1,4 +1,4 @@
-package co.edu.uniquindio.SOLID.Facade;
+package co.edu.uniquindio.SOLID.Service.Fachadas;
 
 import co.edu.uniquindio.SOLID.Service.ClienteService;
 import co.edu.uniquindio.SOLID.Model.DTO.ClienteDTO;

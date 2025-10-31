@@ -1,12 +1,14 @@
 package co.edu.uniquindio.SOLID.Model.DTO;
 
+import co.edu.uniquindio.SOLID.Model.Empleado;
+
 public class EmpleadoDTO {
     public String id;
     public String nombre;
-    public String rol;
+    public Empleado.Rol rol;
     public boolean activo;
 
-    public EmpleadoDTO(String id, String nombre, String rol, boolean activo) {
+    public EmpleadoDTO(String id, String nombre, Empleado.Rol rol, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.rol = rol;
@@ -21,9 +23,9 @@ public class EmpleadoDTO {
         this.nombre = nombre;
     }
 
-    public String getRol() { return rol; }
+    public Empleado.Rol getRol() { return rol; }
 
-    public void setRol(String rol) { this.rol = rol; }
+    public void setRol( Empleado.Rol rol ) { this.rol = rol; }
 
     public String getId() { return id; }
 

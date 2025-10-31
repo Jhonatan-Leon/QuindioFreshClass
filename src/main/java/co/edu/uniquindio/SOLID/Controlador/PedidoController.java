@@ -2,6 +2,7 @@ package co.edu.uniquindio.SOLID.Controlador;
 
 import co.edu.uniquindio.SOLID.Model.*;
 import co.edu.uniquindio.SOLID.Model.DTO.*;
+import co.edu.uniquindio.SOLID.Service.Fachadas.ClientFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.MinimercadoFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,6 +41,7 @@ public class PedidoController implements Initializable {
     @FXML private Label lblTotal;
     @FXML private TextArea txtResultado;
 
+    private ClientFacade clientFacade = ClientFacade.getInstance();
     private MinimercadoFacade minimercadoFacade;
     private ObservableList<ItemPedidoDTO> itemsPedido;
 
@@ -103,7 +105,7 @@ public class PedidoController implements Initializable {
 
     private void cargarClientes() {
         if (cmbClientes != null) {
-            List<ClienteDTO> clientesDTO = minimercadoFacade.obtenerTodosLosClientes();
+            List<ClienteDTO> clientesDTO = clientFacade.getAllClients();
             cmbClientes.setItems(FXCollections.observableArrayList(clientesDTO));
             
             // Configurar cómo se muestra el cliente

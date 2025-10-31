@@ -1,5 +1,6 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
+import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Service.Fachadas.MinimercadoFacade;
 import javafx.collections.FXCollections;
@@ -35,6 +36,7 @@ public class ProductoController implements Initializable {
     private MinimercadoFacade minimercadoFacade;
     private ObservableList<ProductoDTO> productos;
     private ProductoDTO productoSeleccionado;
+    private ProductFacade productFacade = ProductFacade.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +72,7 @@ public class ProductoController implements Initializable {
 
     private void cargarProductos() {
         productos.clear();
-        productos.addAll(minimercadoFacade.obtenerTodosLosProductos());
+        productos.addAll(productFacade.getAllProducts());
         mostrarMensaje("Productos cargados: " + productos.size(), false);
     }
 
@@ -94,7 +96,7 @@ public class ProductoController implements Initializable {
                 Double.parseDouble(txtPrecio.getText().trim())
             );
             
-            if (minimercadoFacade.agregarProducto(nuevoProducto)) {
+            if (productFacade.adddProduct(nuevoProducto)) {
                 cargarProductos();
                 limpiarFormulario(null);
                 mostrarMensaje("Producto agregado exitosamente", false);
@@ -126,7 +128,7 @@ public class ProductoController implements Initializable {
             productoSeleccionado.setNombre(txtNombre.getText().trim());
             productoSeleccionado.setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
             
-            if (minimercadoFacade.actualizarProducto(productoSeleccionado)) {
+            if (productFacade.updateProduct(productoSeleccionado)) {
                 tblProductos.refresh();
                 mostrarMensaje("Producto actualizado exitosamente", false);
                 System.out.println("Producto actualizado: " + productoSeleccionado.getSku());
@@ -161,7 +163,7 @@ public class ProductoController implements Initializable {
             Optional<ButtonType> resultado = confirmacion.showAndWait();
             
             if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                if (minimercadoFacade.eliminarProducto(productoSeleccionado.getSku())) {
+                if (productFacade.deleteProduct(productoSeleccionado.getSku())) {
                     cargarProductos();
                     limpiarFormulario(null);
                     mostrarMensaje("Producto eliminado exitosamente", false);
