@@ -22,14 +22,14 @@ public class ProviderService {
         this.minimercado = Minimercado.getInstancia();
     }
 
-    public Proveedor createProvider(ProveedorDTO newProvider){
-        if(searchProvider() != null){
+    public Proveedor createProvider(Proveedor newProvider){
+        if(searchProvider() == null){
             throw new IllegalArgumentException("Ya existe un proveedor con ese ID");
         }
 
-        Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
-        minimercado.agregarProveedor(proveedor);
-        return proveedor;
+        //Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
+        minimercado.agregarProveedor(newProvider);
+        return newProvider;
     }
 
     public Proveedor searchProvider(){
@@ -56,11 +56,41 @@ public class ProviderService {
         if(p == null){
             throw new IllegalArgumentException("No existe un proveedor con ese ID");
         }
-        minimercado.eliminarProveedor(id);
+        minimercado.eliminarProveedor(p);
     }
 
-    public List<ProveedorDTO> getAllProvider(){
-        return minimercado.getProveedores().stream().map(ProveedorMapper::toDTO).toList();
+    public List<Proveedor> getAllProvider(){
+        return minimercado.getProveedores();
+    }
+
+    public Proveedor lockProvider(String nit,boolean state){
+        Proveedor p = searchProvider();
+        if(p == null){
+            throw new IllegalArgumentException("No existe un proveedor con ese ID");
+        }
+        if(p.getNit().equals(nit)){
+            if(state){
+                p.activar();
+            }else{
+                p.inactivar();
+            }
+        }
+        return p;
+    }
+
+    public Proveedor activateProvider(String nit, boolean state){
+        Proveedor p = searchProvider();
+        if(p == null){
+            throw new IllegalArgumentException("No existe un proveedor con ese ID");
+        }
+        if(p.getNit().equals(nit)){
+            if(state){
+                p.inactivar();
+            }else{
+                p.activar();
+            }
+        }
+        return p;
     }
 
 }
