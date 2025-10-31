@@ -1,7 +1,5 @@
 package co.edu.uniquindio.SOLID.Model.DTO;
 
-import co.edu.uniquindio.SOLID.Model.Empleado;
-
 public class EmpleadoDTO {
     public String id;
     public String nombre;
@@ -32,6 +30,8 @@ public class EmpleadoDTO {
 
     public boolean getActivo() { return activo; }
 
-    public void setActivo(boolean activo) { this.activo = activo; }
+    public boolean isActivo() { this.activo = activo;
+        return false;
+    }
 
 }
