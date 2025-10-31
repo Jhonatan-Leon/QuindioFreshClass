@@ -1,7 +1,6 @@
 package co.edu.uniquindio.SOLID.Service.Fachadas;
 
 import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
-import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Service.ProductoService;
 
 import java.util.List;
@@ -41,7 +40,4 @@ public class ProductFacade {
         return ProductoService.eliminarProducto(Sku);
     }
 
-    public boolean existProduct(String Sku){
-        return ProductoService.existeProducto(Sku);
-    }
 }
