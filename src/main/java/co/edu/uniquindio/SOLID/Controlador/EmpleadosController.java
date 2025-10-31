@@ -3,7 +3,6 @@ package co.edu.uniquindio.SOLID.Controlador;
 import co.edu.uniquindio.SOLID.Model.DTO.EmpleadoDTO;
 import co.edu.uniquindio.SOLID.Model.Empleado;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
-import co.edu.uniquindio.SOLID.Service.EmployeeService;
 import co.edu.uniquindio.SOLID.Service.Fachadas.EmployeeFacade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
