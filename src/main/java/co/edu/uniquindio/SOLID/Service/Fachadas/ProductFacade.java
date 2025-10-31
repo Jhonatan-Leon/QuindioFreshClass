@@ -21,7 +21,7 @@ public class ProductFacade {
         this.ProductoService = new ProductoService();
     }
 
-    public List<Producto> getAllProducts() {
+    public List<ProductoDTO> getAllProducts() {
         return ProductoService.obtenerTodosLosProductos();
     }
 
