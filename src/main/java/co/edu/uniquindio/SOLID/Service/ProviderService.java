@@ -22,32 +22,44 @@ public class ProviderService {
         this.minimercado = Minimercado.getInstancia();
     }
 
-    public Proveedor createProvider(Proveedor newProvider){
+    public Proveedor createProvider(ProveedorDTO newProvider){
         if(searchProvider() == null){
             throw new IllegalArgumentException("Ya existe un proveedor con ese ID");
         }
 
-        //Proveedor proveedor = ProveedorMapper.toDTO(newProvider);
-        minimercado.agregarProveedor(newProvider);
-        return newProvider;
+        Proveedor proveedor = ProveedorMapper.toEntity(newProvider);
+        minimercado.agregarProveedor(proveedor);
+        return proveedor;
+    }
+
+    public Proveedor searchProviderByNit(String nit) {
+        if (nit == null || nit.trim().isEmpty()) {
+            throw new IllegalArgumentException("El NIT no puede ser nulo ni vacío");
+        }
+
+        for (Proveedor p : minimercado.getProveedores()) {
+            if (p.getNit().equals(nit)) {
+                return p;
+            }
+        }
+
+        return null;
     }
 
     public Proveedor searchProvider(){
         return minimercado.getProveedores().stream().findFirst().orElse(null);
     }
 
-    public Proveedor updateProvider(ProveedorDTO provider){
-        Proveedor p = searchProvider();
+    public Proveedor updateProvider(Proveedor provider){
+        Proveedor p = searchProviderByNit(provider.getNit());
 
         if(p == null){
             throw new IllegalArgumentException("No existe un proveedor con ese ID");
         }
+        ProveedorDTO dto = new ProveedorDTO(provider.getNit(), provider.getNombre(), provider.getContacto(), provider.getEmail(), provider.getTelefono());
 
-        if(provider.getNombre() != null) p.setNombre(provider.getNombre());
-        if(provider.getContacto() != null) p.setContacto(provider.getContacto());
-        if(provider.getEmail() != null) p.setEmail(provider.getEmail());
-        if(provider.getTelefono() != null) p.setTelefono(provider.getTelefono());
-        if(false) {if (p.isActivo()) p.activar();else p.inactivar();}
+        ProveedorMapper.updateEntityFromDTO(p,dto);
+
         return p;
     }
 

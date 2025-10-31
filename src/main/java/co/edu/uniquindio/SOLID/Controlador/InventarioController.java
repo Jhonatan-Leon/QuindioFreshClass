@@ -7,6 +7,7 @@ import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
+import co.edu.uniquindio.SOLID.Service.ProviderService;
 import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,8 +99,9 @@ public class InventarioController implements Initializable {
         }
         
         try {
-            Proveedor newp = new Proveedor(nit, nombre, contacto, email, telefono);
+            ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
             Proveedor p = providerFacade.CreateProvider(newp);
+            proveedores.add(p);
             if (cmbProveedores != null) cmbProveedores.getSelectionModel().select(p);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Proveedor creado: " + nombre);
             if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
@@ -123,7 +125,8 @@ public class InventarioController implements Initializable {
         if (nit == null || nit.trim().isEmpty()) { mostrarError("El NIT es obligatorio"); return; }
         try {
             ProveedorDTO newp = new ProveedorDTO(nit, nombre, contacto, email, telefono);
-            Proveedor actualizado = providerFacade.updateProvider(newp);
+            Proveedor proveedorEntity = providerFacade.CreateProvider(newp);
+            Proveedor actualizado = providerFacade.updateProvider(proveedorEntity);
             for (int i = 0; i < proveedores.size(); i++) {
                 if (proveedores.get(i).getNit().equals(nit)) { proveedores.set(i, actualizado); break; }
             }
@@ -187,6 +190,7 @@ public class InventarioController implements Initializable {
         try {
             minimercado.registrarEntradaInventario(proveedor, prod, cant);
             Producto prodU = ProductoMapper.toEntity(prod);
+            prod.setStock(prod.getStock() + cant);
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prodU.getStock());
             if (tblProductosInv != null) tblProductosInv.refresh();
         } catch (IllegalArgumentException e) {

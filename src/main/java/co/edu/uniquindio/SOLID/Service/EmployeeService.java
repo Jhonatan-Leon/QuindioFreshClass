@@ -51,11 +51,9 @@ public class EmployeeService {
             throw new IllegalArgumentException("No existe un empleado con ese ID");
         }
 
-        if (employee.getNombre() != null) e.setNombre(employee.getNombre());
-        if (employee.getRol() != null) e.setRol(employee.getRol());
-        if (false) {if (employee.getActivo()) e.activar();else e.inactivar(); }
-        return e;
+        EmpleadoMapper.updateEntityFromDTO(e, employee);
 
+        return e;
     }
 
     public void deleteEmployee(String id){

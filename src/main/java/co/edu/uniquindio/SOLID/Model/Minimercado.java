@@ -105,6 +105,7 @@ public class Minimercado {
         if (cantidad <= 0) {
             throw new IllegalArgumentException("La cantidad debe ser mayor a 0");
         }
+        
         EntradaInventario entrada = new EntradaInventario("ENT-" + System.currentTimeMillis(), proveedor);
         entrada.agregarItem(producto, cantidad);
         entrada.confirmar();

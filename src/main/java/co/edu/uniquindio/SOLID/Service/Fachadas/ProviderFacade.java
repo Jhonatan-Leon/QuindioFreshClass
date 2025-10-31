@@ -25,7 +25,7 @@ public class ProviderFacade {
         return providerService.getAllProvider();
     }
 
-    public Proveedor CreateProvider(Proveedor newProvider){
+    public Proveedor CreateProvider(ProveedorDTO newProvider){
        Proveedor provider = providerService.createProvider(newProvider);
        return provider;
     }
@@ -34,7 +34,7 @@ public class ProviderFacade {
         return providerService.searchProvider();
     }
 
-    public Proveedor updateProvider(ProveedorDTO provider){
+    public Proveedor updateProvider(Proveedor provider){
         return providerService.updateProvider(provider);
     }
 

@@ -22,9 +22,10 @@ public class EmpleadoMapper {
         );
     }
 
-    public static void updateEntityFromDTO(Empleado entidad, EmpleadoDTO dto) {
-        if (entidad == null || dto == null) return;
+    public static Empleado updateEntityFromDTO(Empleado entidad, EmpleadoDTO dto) {
+        if (entidad == null || dto == null) return null;
         entidad.setNombre(dto.getNombre());
         entidad.setRol(dto.getRol());
+        return entidad;
     }
 }
