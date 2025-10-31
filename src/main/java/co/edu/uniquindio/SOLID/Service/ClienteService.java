@@ -60,6 +60,9 @@ public class ClienteService {
         }
         
         ClienteMapper.updateEntityFromDTO(cliente, clienteDTO);
+        cliente.setNombre(clienteDTO.getNombre());
+        cliente.setCorreo(clienteDTO.getCorreo());
+        cliente.setTelefono(clienteDTO.getTelefono());
         return true;
     }
     
