@@ -1,11 +1,13 @@
 package co.edu.uniquindio.SOLID.Controlador;
 
+import co.edu.uniquindio.SOLID.Model.DTO.ProductoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ProveedorDTO;
 import co.edu.uniquindio.SOLID.Model.Minimercado;
 import co.edu.uniquindio.SOLID.Model.Producto;
 import co.edu.uniquindio.SOLID.Model.Proveedor;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProductFacade;
 import co.edu.uniquindio.SOLID.Service.Fachadas.ProviderFacade;
+import co.edu.uniquindio.SOLID.utils.Mappers.ProductoMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,17 +26,17 @@ public class InventarioController implements Initializable {
     @FXML private TextField txtProvContacto;
     @FXML private TextField txtProvEmail;
     @FXML private TextField txtProvTelefono;
-    @FXML private ComboBox<Producto> cmbProductoEntrada;
+    @FXML private ComboBox<ProductoDTO> cmbProductoEntrada;
     @FXML private Spinner<Integer> spnCantidadEntrada;
     @FXML private Label lblResultadoEntrada;
-    @FXML private TableView<Producto> tblProductosInv;
-    @FXML private TableColumn<Producto, String> colInvSku;
-    @FXML private TableColumn<Producto, String> colInvNombre;
-    @FXML private TableColumn<Producto, Number> colInvPrecio;
-    @FXML private TableColumn<Producto, Number> colInvStock;
+    @FXML private TableView<ProductoDTO> tblProductosInv;
+    @FXML private TableColumn<ProductoDTO, String> colInvSku;
+    @FXML private TableColumn<ProductoDTO, String> colInvNombre;
+    @FXML private TableColumn<ProductoDTO, Number> colInvPrecio;
+    @FXML private TableColumn<ProductoDTO, Number> colInvStock;
 
     private ObservableList<Proveedor> proveedores;
-    private ObservableList<Producto> productos;
+    private ObservableList<ProductoDTO> productos;
     private Minimercado minimercado = Minimercado.getInstancia();
     private ProviderFacade providerFacade = ProviderFacade.getInstance();
     private ProductFacade productFacade = ProductFacade.getInstance();
@@ -66,7 +68,7 @@ public class InventarioController implements Initializable {
             colInvSku.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getSku()));
             colInvNombre.setCellValueFactory(cd -> new javafx.beans.property.SimpleStringProperty(cd.getValue().getNombre()));
             colInvPrecio.setCellValueFactory(cd -> new javafx.beans.property.SimpleDoubleProperty(cd.getValue().getPrecio()));
-            colInvStock.setCellValueFactory(cd -> new javafx.beans.property.SimpleIntegerProperty(cd.getValue().getStock()));
+            colInvStock.setCellValueFactory(cd -> new javafx.beans.property.SimpleIntegerProperty());
             tblProductosInv.setItems(productos);
         }
         if (tpCrearProveedor != null) tpCrearProveedor.setExpanded(false);
@@ -165,7 +167,7 @@ public class InventarioController implements Initializable {
     @FXML
     void confirmarEntradaInventario() {
         Proveedor proveedor = cmbProveedores != null ? cmbProveedores.getValue() : null;
-        Producto prod = cmbProductoEntrada != null ? cmbProductoEntrada.getValue() : null;
+        ProductoDTO prod = cmbProductoEntrada != null ? cmbProductoEntrada.getValue() : null;
         int cant = spnCantidadEntrada != null ? spnCantidadEntrada.getValue() : 0;
         
         // Validaciones de campos
@@ -184,7 +186,8 @@ public class InventarioController implements Initializable {
         
         try {
             minimercado.registrarEntradaInventario(proveedor, prod, cant);
-            if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prod.getStock());
+            Producto prodU = ProductoMapper.toEntity(prod);
+            if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prodU.getStock());
             if (tblProductosInv != null) tblProductosInv.refresh();
         } catch (IllegalArgumentException e) {
             mostrarError(e.getMessage());
