@@ -37,6 +37,6 @@ public class ProveedorDTO {
 
     @Override
     public String toString() {
-        return nit + " ("+ nombre +")" + "("+contacto+")"+"("+email+")"+"("+telefono+")";
+        return nombre;
     }
 }
