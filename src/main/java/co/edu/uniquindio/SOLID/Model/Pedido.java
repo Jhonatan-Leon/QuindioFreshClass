@@ -30,4 +30,5 @@ public class Pedido {
     public String getDireccionEnvio() {return direccionEnvio;}
     public String getNotas() {return notas;}
     public String getCodigoDescuento() {return codigoDescuento;}
+
 }

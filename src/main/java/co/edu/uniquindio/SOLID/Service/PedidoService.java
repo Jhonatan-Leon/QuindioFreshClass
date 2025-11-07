@@ -4,6 +4,7 @@ import co.edu.uniquindio.SOLID.Model.*;
 import co.edu.uniquindio.SOLID.Model.DTO.ItemPedidoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.PedidoDTO;
 import co.edu.uniquindio.SOLID.Model.DTO.ResumenPedidoDTO;
+import co.edu.uniquindio.SOLID.Model.Strategy.EstrategiaDescuento;
 import co.edu.uniquindio.SOLID.Service.Envio.Envio;
 import co.edu.uniquindio.SOLID.Service.Envio.EnvioExpress;
 import co.edu.uniquindio.SOLID.Service.Notificacion.Notificacion;
@@ -17,6 +18,7 @@ import java.util.List;
 public class PedidoService {
     private static PedidoService Instance;
     CatalogoProductosService catalogoProductosService;
+    private final GestorDescuento gestorDescuento = GestorDescuento.getInstance();
     ClienteService clienteService;
 
     public static PedidoService getInstance(){
@@ -82,7 +84,12 @@ public class PedidoService {
     }
 
     public double calcularTotal(Pedido pedido, Envio envio) {
-        return calcularSubtotal(pedido) + envio.calcularCostoEnvio();
+        EstrategiaDescuento descuentoSeleccionado = gestorDescuento.seleccionado(pedido);
+        double descuento = 0;
+        if (descuentoSeleccionado != null) {
+            descuento = descuentoSeleccionado.calcularDescuento(calcularSubtotal(pedido), pedido);
+        }
+        return calcularSubtotal(pedido) + envio.calcularCostoEnvio() - descuento;
     }
    
     public ResumenPedidoDTO procesarPedido(PedidoDTO pedidoDTO) {
@@ -135,4 +142,12 @@ public class PedidoService {
         return subtotal + costoEnvio;
     }
 
+
+    public double Totalitems(Pedido pedido){
+        double total = 0;
+        for (ItemPedido item : pedido.getItems()) {
+            total += item.getCantidad();
+        }
+        return total;
+    }
 }
