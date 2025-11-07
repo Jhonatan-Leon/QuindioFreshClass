@@ -183,7 +183,7 @@ public class InventarioController implements Initializable {
         
         try {
             inventory.registerInventario(proveedor, prod, cant);
-            prod.setStock(prod.getStock() + cant);
+            prod.setStock(String.valueOf(Integer.parseInt(prod.getStock()) + cant));
             if (lblResultadoEntrada != null) lblResultadoEntrada.setText("Entrada confirmada. Stock " + prod.getSku() + ": " + prod.getStock());
             if (tblProductosInv != null) tblProductosInv.refresh();
         } catch (IllegalArgumentException e) {
